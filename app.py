@@ -532,18 +532,14 @@ def comparison_table(
 
 
 def forecast_affordability_message(result: ScenarioResult) -> str:
-    """Prioritise unaffordable retained cover over an additional-joiner gap."""
+    """Prioritise unaffordable retained cover over a forecast budget shortfall."""
     if result.retained_balance < 0:
         return (
             "Cover for current members expected to stay exceeds the budget. "
             "No additional employees are affordable."
         )
-    if result.retention_based_enrolment_gap > 0:
-        return (
-            "Expected joiners exceed additional employees affordable under "
-            "expected retention by "
-            f"{format_membership(result.retention_based_enrolment_gap)}."
-        )
+    if result.balance < 0:
+        return "Expected joiners are forecast to push total cost over budget."
     return "Forecast cover is within budget."
 
 
@@ -615,8 +611,7 @@ def scenario_comparison_output() -> Tag | None:
 
     # Keep warnings under their scenario in the relevant comparison.
     if any(
-        result.retained_balance < 0 or result.retention_based_enrolment_gap > 0
-        for result in results
+        result.retained_balance < 0 or result.balance < 0 for result in results
     ):
         forecast_rows.append(("Forecast affordability checks", forecast_checks))
     if any(result.full_balance < 0 for result in results):

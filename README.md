@@ -56,9 +56,9 @@ renewal change; both tables and warnings read the returned values.
 | Expected take-up (%) | 0–100, step 0.01 | Yes | Applies only to additional eligible employees |
 | Three renewal changes (%) | > -100, no maximum | Yes (all three) | Scenario identity and entry order are preserved, including duplicates |
 
-All fields start blank; zero is a valid deliberate entry for budget and
-counts, but not for employee cost or renewal (which must be > -100%).
-Results appear only once every input is valid.
+All fields start blank. Zero is valid for budget, employee counts and
+renewal change. Employee cost must be positive; renewal change must
+exceed -100%. Results appear only once every input is valid.
 
 ## Model summary
 
